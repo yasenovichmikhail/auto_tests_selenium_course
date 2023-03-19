@@ -1,3 +1,3 @@
-Мои автотесты
+My auto tests
 # my_auto_tests
-Автоматизация тестирования веб-приложения с использованием Selenium WebDriver, Python
+Web Application Test Automation using Selenium WebDriver, Python
