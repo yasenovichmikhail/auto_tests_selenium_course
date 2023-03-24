@@ -106,7 +106,7 @@ word_list = ['год', 'человек', 'время', 'дело', 'жизнь',
 
 
 def display_hangman(tries):
-    stages = [  # финальное состояние: голова, торс, обе руки, обе ноги
+   stages = [  # финальное состояние: голова, торс, обе руки, обе ноги
                 '''
                    --------
                    |      |
@@ -176,18 +176,19 @@ def display_hangman(tries):
                    |     
                    -
                 '''
-    ]
-    return stages[tries]
+   ]
+   return stages[tries]
 
 def is_valid(n):
-   if n.isalpha() and n in ('абвгдеёжзийклмнопрстуфхцчшщъьэюя'):
-      return Trueц
-   else:
-      return False
+   for i in range(len(n)):
+      if n[i].isalpha() and n[i] in ('абвгдеёжзийклмнопрстуфхцчшщъьэюя'):
+         return True
+      else:
+         return False
 
 def is_valid_word():
    while True:
-        x = input(f'Введи любую букву русского алфавита. Твоя Буква: ')
+        x = input(f'Введи любую букву русского алфавита или слово целиком. Твой ответ: ')
         if is_valid(x) == True:
             return str(x).upper()
         else:
@@ -195,22 +196,30 @@ def is_valid_word():
 
 
 def get_word():
-    random_word = random.choice(word_list).upper()
-    return random_word
+   random_word = random.choice(word_list).upper()
+   return random_word
 
 
 def play(word):
-    print('Давай играть в угадайку слов!')
-    print(display_hangman(6))
-    word_completion = len(word) * '_'
-    guessed = False                    # сигнальная метка
-    guessed_letters = []               # список уже названных букв
-    guessed_words = []                 # список уже названных слов
-    tries = 6
-    print(word)
-    print(word_completion) 
-    while True:
-        input_word = is_valid_word()
-        print(input_word)  
+   print('Давай играть в угадайку слов!')
+   print(display_hangman(6))
+   word_completion = len(word) * '_'
+   guessed = False                    # сигнальная метка
+   guessed_letters = []               # список уже названных букв
+   guessed_words = []                 # список уже названных слов
+   tries = 6
+   print(word_completion)
+   while True:
+       input_word = is_valid_word()
+       if input_word not in (guessed_letters):
+         guessed_letters.append(input_word)
+         tries -= 1
+         print(word)
+         print(word_completion) 
+         print(guessed_letters)
+         print('Осталось попыток: ', tries)
+       else: 
+         print('Повторяешься!')
+
 
 play(get_word())
