@@ -179,6 +179,20 @@ def display_hangman(tries):
     ]
     return stages[tries]
 
+def is_valid(n):
+   if n.isalpha() and n in ('абвгдеёжзийклмнопрстуфхцчшщъьэюя'):
+      return Trueц
+   else:
+      return False
+
+def is_valid_word():
+   while True:
+        x = input(f'Введи любую букву русского алфавита. Твоя Буква: ')
+        if is_valid(x) == True:
+            return str(x).upper()
+        else:
+            print('Вводить можно только буквы русского алфавита, попробуй еще раз!')
+
 
 def get_word():
     random_word = random.choice(word_list).upper()
@@ -186,9 +200,17 @@ def get_word():
 
 
 def play(word):
-    print('Давайте играть в угадайку слов!')
+    print('Давай играть в угадайку слов!')
     print(display_hangman(6))
+    word_completion = len(word) * '_'
+    guessed = False                    # сигнальная метка
+    guessed_letters = []               # список уже названных букв
+    guessed_words = []                 # список уже названных слов
+    tries = 6
     print(word)
-    print(len(word))
+    print(word_completion) 
+    while True:
+        input_word = is_valid_word()
+        print(input_word)  
 
 play(get_word())
