@@ -200,6 +200,15 @@ def get_word():
    return random_word
 
 
+def print_word(word, list):
+    for c in word:
+        if c in list:
+            print(c, end=' ')
+        else:
+            print('_', end=' ')
+    print()
+
+
 def play(word):
    print('Давай играть в угадайку слов!')
    print(display_hangman(6))
@@ -211,15 +220,60 @@ def play(word):
    print(word_completion)
    while True:
        input_word = is_valid_word()
-       if input_word not in (guessed_letters):
-         guessed_letters.append(input_word)
-         tries -= 1
-         print(word)
-         print(word_completion) 
-         print(guessed_letters)
-         print('Осталось попыток: ', tries)
-       else: 
+       if input_word in guessed_letters or input_word in guessed_words:
          print('Повторяешься!')
+         print('Осталось попыток: ', tries)
+         continue
 
+       if len(input_word) > 1:
+            if input_word == word:
+               print('Поздравляем, вы угадали слово! Вы победили!')
+               break
+            else:
+               guessed_words.append(input_word)
+               tries -= 1
+               print(word)
+               print(word_completion)
+               print(guessed_words)
+               print('Осталось попыток: ', tries)
+               print(display_hangman(tries))
+               if tries == 0:
+                    print(f'Вы не смогли угадать слово: {word}')
+                    break
+               continue
+
+       if input_word in word:
+            guessed_letters.append(input_word)
+            for c in word:
+                if c not in guessed_letters:
+                    print('Угадали букву')
+                    print_word(word, guessed_letters)
+                    guessed = False
+                    break
+                guessed = True
+            if guessed:    
+                print_word(word, guessed_letters)
+                print('Поздравляем, вы угадали слово! Вы победили!')
+                break
+       else:
+            guessed_letters.append(input_word)
+            tries -= 1
+            print(f'Не верно, осталось попыток {tries}')
+            print(display_hangman(tries))
+            print_word(word, guessed_letters)
+       if tries == 0:
+            print(f'Вы не смогли угадать слово: {word}')
+            break
+
+def play_again():
+    again = 'y'
+    while again.lower() == 'y':
+        again = input('Хотите попробовать еще раз? (y = yes, n = no): ') 
+        if again == 'y':
+            play(get_word())
+        else:
+            print('Спасибо, что играли в угадайку слов. Еще увидимся...')
 
 play(get_word())
+
+play_again()
