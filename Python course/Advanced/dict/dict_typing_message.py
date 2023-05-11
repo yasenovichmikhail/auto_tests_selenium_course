@@ -1,5 +1,6 @@
 def get_typing_combination(text, numbers):
     my_list = list(text.upper())
+    result = ''
     print(my_list)
     for i in my_list:
         # print(i)
@@ -8,11 +9,14 @@ def get_typing_combination(text, numbers):
                 if i in value:
                     # print(key)
                     for j in range(len(value)):
-                        if i != value[j]:
-                            print(key)
+                        result += key
+                        if i == value[j]:
+                            break
+    print(result)
+                        
 
-numbers = {1: '.,?!:', 2: 'ABC', 3: 'DEF', 4: 'GHI', 5: 'JKL',
- 6: 'MNO', 7: 'PQRS', 8: 'TUV', 9: 'WXYZ', 0: ' '}
+numbers = {'1': '.,?!:', '2': 'ABC', '3': 'DEF', '4': 'GHI', '5': 'JKL',
+ '6': 'MNO', '7': 'PQRS', '8': 'TUV', '9': 'WXYZ', '0': ' '}
 
 text = 'Hello, World!'
 
