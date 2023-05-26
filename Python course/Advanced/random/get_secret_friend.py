@@ -4,9 +4,8 @@ def get_secret_friend():
     s = [input() for _ in range(int(input()))]
     counter = 0
     result_list = []
-    while counter != 3:
+    while counter != len(s):
         for i in s:
-            print(i)
             x = random.choice(s)
             if i != x:
                 tmp = [i, x]
@@ -19,9 +18,9 @@ def get_secret_friend():
                     continue
             else:
                 continue
-    print(result_list)    
-    for k in result_list):
-        
+#    print(result_list)    
+    for k in result_list:
+        print(f"{k[0]} - {k[1]}")
         
                 
 get_secret_friend()
