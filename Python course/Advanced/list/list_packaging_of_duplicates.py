@@ -1,7 +1,7 @@
 
 def get_packaging_of_duplicates(s):
     list = s.split(' ')
-    result = []
+    result = [[]]
     print(list)
     for i in range(len(list)):
         if [list[i]] not in result:
