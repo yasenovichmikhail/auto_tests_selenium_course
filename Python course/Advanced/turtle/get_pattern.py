@@ -22,6 +22,7 @@ def get_circle():
         turtle.fillcolor('black')
         turtle.begin_fill()
         turtle.circle(30)
+        turtle.end_fill()
 
 get_circle()
 
@@ -29,6 +30,9 @@ turtle.penup()
 turtle.goto(0, 100)
 turtle.pendown()
 
+turtle.fillcolor('white')
+turtle.begin_fill()
 triangle_right()
+turtle.end_fill()
 
 window.exitonclick()
