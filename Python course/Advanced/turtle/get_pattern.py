@@ -8,6 +8,7 @@ def triangle_left():
 
 def triangle_right():
     for i in range(3):
+        turtle.pencolor('white')
         turtle.forward(200)
         turtle.right(120)
 
