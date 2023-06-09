@@ -2,11 +2,14 @@ import random
 
 def get_secret_friend():
     s = [input() for _ in range(int(input()))]
+    print(s)
     counter = 0
     result_list = []
     while counter != len(s):
         for i in s:
             x = random.choice(s)
+            print(x)
+            print(i)
             if i != x:
                 tmp = [i, x]
                 tmp1 = [x, i]
