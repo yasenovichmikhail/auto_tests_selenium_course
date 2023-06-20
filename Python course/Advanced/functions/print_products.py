@@ -6,5 +6,4 @@ def print_products(*args):
     if len(lst) == 0:
         print('Нет продуктов')
 
-
 print_products('Бананы', [1, 2], ('Stepik',), 'Яблоки', '', 'Макароны', 5, True)
