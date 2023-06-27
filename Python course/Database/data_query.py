@@ -10,8 +10,8 @@ conn = psycopg2.connect(
 
 cursor = conn.cursor()
 
-cursor.execute("select * from wa_users")
+cursor.execute("select user_id, login_token from wa_users")
 
 # print(cursor.fetchone())
 # print(cursor.fetchall())
-print(cursor.fetchmany(size=10), sep='\n')
+print(*cursor.fetchmany(size=10), end='\n')
