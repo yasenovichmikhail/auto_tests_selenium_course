@@ -10,13 +10,13 @@ conn = psycopg2.connect(
     port="5432"
 )
 
-cursor = conn.cursor()
+# cursor = conn.cursor()
 
-cursor.execute("select user_id, login_token from wa_users")
+# cursor.execute("select user_id, login_token from wa_users")
 
 # print(cursor.fetchone())
 # print(cursor.fetchall())
-print(*cursor.fetchmany(size=10), end='\n')
+# print(*cursor.fetchmany(size=10), end='\n')
 
 # pd.read_sql("select user_id, login_token from wa_users", cursor)
 
@@ -26,7 +26,7 @@ def execute_query(connection, query):
     result = None
     try:
         cursor.execute(query)
-        result = cursor.fetchall()
+        result = cursor.fetchmany(size=10)
         return result
     except OperationalError as e:
         print(f"The error '{e}' occurred")
@@ -35,5 +35,6 @@ select_users = "SELECT user_id, login_token FROM wa_users"
 
 users = execute_query(conn, select_users)
 
-# for user in users:
-#     print(user)
+print(users)
+for i in users:
+    print(i)
