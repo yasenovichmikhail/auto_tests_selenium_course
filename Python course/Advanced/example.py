@@ -4,9 +4,14 @@ import matplotlib.pyplot as plt
 
 # fig = plt.figure()  # an empty figure with no Axes
 # fig, ax = plt.subplots()  # a figure with a single Axes
-fig, axs = plt.subplot_mosaic([['left', 'right_top'],
-                               ['left', 'right_bottom']])
-plt.show()
+
+def my_plotter(ax, data1, data2, param_dict):
+    """
+    A helper function to make a graph.
+    """
+    out = ax.plot(data1, data2, **param_dict)
+    return out
+
 
 
 # df = pd.DataFrame({
