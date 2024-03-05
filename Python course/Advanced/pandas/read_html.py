@@ -1,5 +1,5 @@
 import pandas as pd
 
-germany = pd.read_html('https://www.uefa.com/insideuefa/national-associations/ger/domestic/league/1039/')
+simpsons = pd.read_html('https://ru.wikipedia.org/wiki/Симпсоны')
 
-print(germany)
+print(simpsons)
