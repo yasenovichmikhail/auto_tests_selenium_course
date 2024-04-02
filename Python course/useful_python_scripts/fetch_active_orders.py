@@ -1,14 +1,9 @@
 
 import requests
-from pprint import pprint
-import json
 from sqlalchemy import create_engine
 from sqlite3 import OperationalError
-import psycopg2
 import pandas as pd
 import schedule
-
-
 
 active_orders_query = """select tuo.order_id
 from tm_order_execution_progresses toep
@@ -18,21 +13,17 @@ where tuo.order_status_id = 1
   and tuo.action_type_id != 5
 order by tuo.start_date asc"""
 
-# def execute_query(connection, query):
-#     cursor = connection.cursor()
-#     result = None
-#     try:
-#         cursor.execute(query)
-#         # result = cursor.fetchmany(size=10)
-#         result = cursor.fetchall()
-#         return result
-#     except OperationalError as e:
-#         print(f"The error '{e}' occurred")
-
 
 def execute_query(query, connect):
-    active_orders = len(pd.read_sql(query, connect))
-    text_message = f'Users created: {active_orders} orders'
+    try:
+        result = len(pd.read_sql(query, connect))
+        return result
+    except OperationalError as e:
+        print(f"The error '{e}' occurred")
+
+
+def create_message(amount):
+    text_message = f'There are {amount} active orders at the moment'
     return text_message
 
 
@@ -45,12 +36,13 @@ def send_msg(text):
 
 
 def job():
-    message = execute_query(active_orders_query, conn)
-    send_msg(message)
-    print(message)
+    orders = execute_query(active_orders_query, conn)
+    if orders < 700:
+        message = create_message(orders)
+        send_msg(message)
 
 
-schedule.every(1).hour.do(job)
+schedule.every(30).minutes.do(job)
 # schedule.every(5).to(10).days.do(job)
 # schedule.every().hour.do(job, message='things')
 # schedule.every().day.at("10:30").do(job)
