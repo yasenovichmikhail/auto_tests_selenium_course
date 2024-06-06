@@ -35,6 +35,5 @@ select_users = "SELECT user_id, login_token FROM wa_users"
 
 users = execute_query(conn, select_users)
 
-print(users)
-for i in users:
-    print(i)
+print(len(users))
+
