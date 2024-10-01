@@ -4,6 +4,7 @@ from Config import *
 import schedule
 
 SCORE = '0 : 0'
+STATUS_MATCH = 'Матч еще не начинался'
 
 
 def get_content():
@@ -17,23 +18,27 @@ def get_content():
 
 
 def get_results(data):
-    all_headers = data.findAll('div', class_='match-live-container')
     global SCORE
+    global STATUS_MATCH
+    all_headers = data.findAll('div', class_='match-live-container')
     for header in all_headers:
-        score = header.find('div', class_='live-match-result').text.strip()
-        if score != SCORE:
-            team1, team2 = header.findAll('span', class_='live-match-team-name')
-            team1 = team1.text.strip().title()
-            team2 = team2.text.strip().title()
-            date_time = header.find('div', class_='st-vcenter live-match-result-content').text.strip()
-            date_time = date_time.split('.')
-            date = str(date_time[0])
-            time = (date_time[1])
-            text_message = f'{date}. {time}, {team1} {score} {team2}'
-            send_msg(text_message)
-            SCORE = score
-        else:
+        status_online = header.find('div', class_='live-match-link').text.strip()
+        if status_online != STATUS_MATCH:
+            score = header.find('div', class_='live-match-result').text.strip()
+            if score != SCORE:
+                team1, team2 = header.findAll('span', class_='live-match-team-name')
+                team1 = team1.text.strip().title()
+                team2 = team2.text.strip().title()
+                date_time = header.find('div', class_='st-vcenter live-match-result-content').text.strip()
+                date_time = date_time.split('.')
+                date = str(date_time[0])
+                time = (date_time[1])
+                text_message = f'{date}. {time}, {team1} {score} {team2}'
+                print(text_message)
+                send_msg(text_message)
+                SCORE = score
             continue
+        continue
 
 
 def send_msg(text):
@@ -49,6 +54,6 @@ def main():
 
 
 if __name__ == '__main__':
-    schedule.every(1).minutes.do(main)
+    schedule.every(10).seconds.do(main)
     while True:
         schedule.run_pending()
