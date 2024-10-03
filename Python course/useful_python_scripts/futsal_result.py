@@ -4,7 +4,9 @@ from Config import *
 import schedule
 
 SCORE = '0 : 0'
-STATUS_MATCH = 'Матч еще не начинался'
+STATUS_MATCH_BEFORE = 'Матч еще не начинался'
+STATUS_MATCH_END = 'Матч завершен'
+HALF_TIME = 'Перерыв'
 
 
 def get_content():
@@ -19,11 +21,11 @@ def get_content():
 
 def get_results(data):
     global SCORE
-    global STATUS_MATCH
+    global STATUS_MATCH_BEFORE
     all_headers = data.findAll('div', class_='match-live-container')
     for header in all_headers:
         status_online = header.find('div', class_='live-match-link').text.strip()
-        if status_online != STATUS_MATCH:
+        if status_online != STATUS_MATCH_BEFORE or status_online != STATUS_MATCH_END or status_online != HALF_TIME:
             score = header.find('div', class_='live-match-result').text.strip()
             if score != SCORE:
                 team1, team2 = header.findAll('span', class_='live-match-team-name')
@@ -54,6 +56,6 @@ def main():
 
 
 if __name__ == '__main__':
-    schedule.every(10).seconds.do(main)
+    schedule.every(3).minutes.do(main)
     while True:
         schedule.run_pending()
