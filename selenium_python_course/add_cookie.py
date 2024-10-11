@@ -105,17 +105,20 @@ with webdriver.Chrome() as webdriver:
                {'name': 'b9wAAVSyw4V2LQ', 'value': 'SDkldbPnf6NjLZSxWZV7CpCW'},
                {'name': 'jFhFn0wPFRG', 'value': 'RYqOrD21ZN7aUeBXqISZ2afocnvvwd6hw3BXUj1wEm0mUO'}]
     webdriver.get('https://parsinger.ru/selenium/5.6/1/index.html')
-    ages = []
+    all_ages = []
+    all_skills = []
+    my_list = []
     for cookie in cookies:
+        person_dict = {}
         webdriver.add_cookie(cookie)
         webdriver.refresh()
         get_age = webdriver.find_element(By.XPATH, "//span[@id='age']").text.split()
-        ages.append(get_age[1])
-    # webdriver.add_cookie()
-    # webdriver.refresh()
-    total = 0
-    for i in ages:
-        if i == 20:
-            total += 1
+        get_name = webdriver.find_element(By.XPATH, "//span[@id='name']").text.split(': ')
+        get_skills = webdriver.find_elements(By.XPATH, "//div[@id='skills']/ul/li")
+        person_dict['name'] = get_name[1]
+        person_dict['ages'] = get_age[1]
+        person_dict['skills'] = len(get_skills)
+        my_list.append(person_dict)
+        webdriver.delete_all_cookies()
+    print(my_list)
 
-    print(total)
