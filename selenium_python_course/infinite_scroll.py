@@ -8,7 +8,7 @@ from selenium.webdriver.common.keys import Keys
 with webdriver.Chrome() as driver:
     lst = []
     total = 0
-    driver.get('https://parsinger.ru/infiniti_scroll_1/')
+    driver.get('https://parsinger.ru/infiniti_scroll_2/')
     scroll_container = driver.find_element(By.XPATH, "//div[@id='scroll-container']")
     actions = ActionChains(driver)
     while True:
