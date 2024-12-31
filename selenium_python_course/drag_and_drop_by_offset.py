@@ -3,7 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 
-url = "https://parsinger.ru/draganddrop/2/index.html"
+url = "https://parsinger.ru/selenium/5.10/8/index.html"
 
 with webdriver.Chrome() as driver:
     driver.get(url)

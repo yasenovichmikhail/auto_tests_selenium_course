@@ -105,20 +105,61 @@ with webdriver.Chrome() as webdriver:
                {'name': 'b9wAAVSyw4V2LQ', 'value': 'SDkldbPnf6NjLZSxWZV7CpCW'},
                {'name': 'jFhFn0wPFRG', 'value': 'RYqOrD21ZN7aUeBXqISZ2afocnvvwd6hw3BXUj1wEm0mUO'}]
     webdriver.get('https://parsinger.ru/selenium/5.6/1/index.html')
+    webdriver.implicitly_wait(10)
     all_ages = []
     all_skills = []
     my_list = []
+    sort_age_list = []
     for cookie in cookies:
         person_dict = {}
         webdriver.add_cookie(cookie)
         webdriver.refresh()
         get_age = webdriver.find_element(By.XPATH, "//span[@id='age']").text.split()
-        get_name = webdriver.find_element(By.XPATH, "//span[@id='name']").text.split(': ')
-        get_skills = webdriver.find_elements(By.XPATH, "//div[@id='skills']/ul/li")
-        person_dict['name'] = get_name[1]
-        person_dict['ages'] = get_age[1]
-        person_dict['skills'] = len(get_skills)
-        my_list.append(person_dict)
-        webdriver.delete_all_cookies()
-    print(my_list)
+        if len(get_age) > 0:
+            get_name = webdriver.find_element(By.XPATH, "//span[@id='name']").text.split(': ')
+            # print(get_name)
+            if get_name[1] == 'Kathleen Powers':
+                print(cookie['value'])
+            get_skills = webdriver.find_elements(By.XPATH, "//div[@id='skills']/ul/li")
+            person_dict['name'] = get_name[1]
+            person_dict['ages'] = get_age[1]
+            all_ages.append(get_age[1])
+            person_dict['skills'] = len(get_skills)
+            my_list.append(person_dict)
+            webdriver.delete_all_cookies()
+        continue
+    min_age = min(all_ages)
 
+    for lst in my_list:
+        for key, value in lst.items():
+            # print(key, value)
+            if key == 'ages' and value == min_age:
+                sort_age_list.append(lst)
+
+    max_skills = 0
+    for skill in sort_age_list:
+        for key, value in skill.items():
+            if key == 'skills':
+                if value > max_skills:
+                    max_skills = value
+
+    result = dict()
+    for sorted_person in sort_age_list:
+        for key, value in sorted_person.items():
+            if key == 'skills' and value == max_skills:
+                result = sorted_person
+    # print(sort_age_list)
+    # print(max_skills)
+    print(result)
+
+    # for cookie in cookies:
+    #     person_dict = {}
+    #     webdriver.add_cookie(cookie)
+    #     webdriver.refresh()
+    #     get_age = webdriver.find_element(By.XPATH, "//span[@id='age']").text.split()
+    #     get_name = webdriver.find_element(By.XPATH, "//span[@id='name']").text.split(': ')
+    #     get_skills = webdriver.find_elements(By.XPATH, "//div[@id='skills']/ul/li")
+    #     if get_age == result['ages'] and get_skills == result['skills'] and get_name == result['name']:
+    #         print(cookie['value'])
+    #     else:
+    #         webdriver.delete_all_cookies()
