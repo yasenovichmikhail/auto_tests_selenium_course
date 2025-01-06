@@ -16,23 +16,13 @@ with webdriver.Chrome() as driver:
     height_visible = driver.find_element(By.XPATH, "//span[@id='height']").text.split(" ")
     diff_x = (width_actual - int(width_visible[-1])) - 1
     diff_y = height_actual - int(height_visible[-1])
-    print(width_actual)
-    print(height_actual)
-    print(width_visible)
-    print(height_visible)
-    print(diff_x)
-    print(diff_y)
 
     for i in window_size_x:
         for j in window_size_y:
             driver.set_window_size(i + diff_x, j + diff_y)
             result = driver.find_element(By.XPATH, "//span[@id='result']")
             result = result.text
-            print(result)
             if len(result) > 1:
-                result_code.append(result)
                 window_size = driver.get_window_size()
                 print(window_size)
                 break
-
-    print(result_code)
