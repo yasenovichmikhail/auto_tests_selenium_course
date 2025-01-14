@@ -1,6 +1,7 @@
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from
 
 with webdriver.Chrome() as driver:
     all_links = []
@@ -17,4 +18,6 @@ with webdriver.Chrome() as driver:
         time.sleep(1)
     print(all_links)
     print(len(all_links))
+
+
 
